@@ -41,6 +41,8 @@ public:
     strings_.emplace_back(init);
   }
 
+  void append (std::vector<std::string> init) { strings_.emplace_back(init);}
+
   template <typename T>
   void append(const T &v)
   {

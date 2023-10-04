@@ -483,6 +483,25 @@ Index *Table::find_index(const char *index_name) const
   }
   return nullptr;
 }
+
+std::vector<std::vector<std::string>> Table::get_index_info() const {
+  std::vector<std::vector<std::string>> result_vec_vec;
+  int cnt = 1;
+  for (Index *index : indexes_) {
+    std::vector<std::string> index_str;
+    index_str.emplace_back(table_meta_.name());
+    // index_str.emplace_back(std::string(index.is_non_unique()));
+    // non-unique 还没有实现先空着
+    index_str.emplace_back("1");
+    index_str.emplace_back(index->index_meta().name());
+    index_str.emplace_back(to_string(cnt));
+    index_str.emplace_back(index->index_meta().field());
+    cnt++;
+    result_vec_vec.push_back(index_str);
+  }
+  return result_vec_vec;
+}
+
 Index *Table::find_index_by_field(const char *field_name) const
 {
   const TableMeta &table_meta = this->table_meta();
